@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+/*
+ * HodL design tokens: "Vault, after dark".
+ * Mint means money that's safe: locked funds and the one main action per screen.
+ */
+@theme {
+  --color-night: #060807;
+  --color-panel: #0c0f0d;
+  --color-panel-2: #121613;
+  --color-paper: #edefea;
+  --color-muted: #9ca39d;
+  --color-faint: #7a827b;
+  --color-mint: #5bf0b0;
+  --color-mint-hover: #9df7cf;
+  --color-sky: #7cc4ff; /* released */
+  --color-lilac: #c3a6ff; /* refunded */
+  --color-coral: #ff8a7a; /* returned, deadline, errors */
+  --color-stone: #b7bdb8; /* not funded */
+  --color-usdc: #2775ca;
+
+  --font-sans: var(--font-geist), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background: var(--color-night);
+  }
+  body {
+    background: var(--color-night);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  ::selection {
+    background: rgb(91 240 176 / 0.3);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-mint);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-faint);
+  }
+}
+
+/* Figures: amounts, addresses, hashes, countdowns line up. */
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Small mono caps label: "LOCKED IN CONTRACT", "RECEIPTS". */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+}
+
+/* ------------------------------------------------------------------ motion */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spinr { to { transform: rotate(-360deg); } }
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 0 10px rgb(91 240 176 / 0.06), 0 0 50px rgb(91 240 176 / 0.25); }
+  50% { box-shadow: 0 0 0 16px rgb(91 240 176 / 0.04), 0 0 90px rgb(91 240 176 / 0.45); }
+}
+@keyframes ping {
+  0% { transform: scale(1); opacity: 0.75; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes shine {
+  0% { background-position: -160% 0; }
+  55%, 100% { background-position: 260% 0; }
+}
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(40px, -30px); }
+}
+@keyframes breathe {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+@keyframes load {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+.rise { animation: rise 0.9s var(--ease-out-soft) both; }
+.d1 { animation-delay: 0.08s; }
+.d2 { animation-delay: 0.18s; }
+.d3 { animation-delay: 0.3s; }
+.d4 { animation-delay: 0.42s; }
+.d5 { animation-delay: 0.56s; }
+.d6 { animation-delay: 0.7s; }
+.spin { animation: spin 44s linear infinite; }
+.spinr { animation: spinr 64s linear infinite; }
+.glow { animation: glow 3.6s ease-in-out infinite; }
+.ping { animation: ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+.float { animation: float 6s ease-in-out infinite; }
+.float2 { animation: float 7s ease-in-out 1.2s infinite; }
+.drift { animation: drift 18s ease-in-out infinite; }
+.breathe { animation: breathe 3.6s ease-in-out infinite; }
+.load { animation: load 1.6s ease-in-out infinite; }
+.marquee { display: flex; width: max-content; animation: marquee 36s linear infinite; }
+.shine {
+  background-image: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 0.6) 50%, transparent 65%);
+  background-size: 250% 100%;
+  background-repeat: no-repeat;
+  animation: shine 4s ease-in-out infinite;
+}
+
+.btn { transition: transform 0.2s ease, filter 0.2s ease, background-color 0.2s ease, border-color 0.2s ease; }
+.btn:hover:not(:disabled):not([aria-disabled="true"]) { transform: translateY(-2px); filter: brightness(1.06); }
+.btn:active:not(:disabled) { transform: translateY(0); }
+.lift { transition: transform 0.3s var(--ease-out-soft), border-color 0.3s ease; }
+.lift:hover { transform: translateY(-5px); border-color: rgb(91 240 176 / 0.35); }
+.row { transition: background-color 0.2s ease; }
+.row:hover { background-color: rgb(255 255 255 / 0.03); }
+.field { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+.field:focus-within { border-color: rgb(91 240 176 / 0.5); box-shadow: 0 0 0 4px rgb(91 240 176 / 0.08); }
+.field[data-invalid="true"] { border-color: rgb(255 138 122 / 0.5); }
+
+/* Scroll-driven reveal where supported; the motion <Reveal> covers the rest. */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 25%;
+  }
+}
+
+/* Dotted grid behind the hero. */
+.dot-grid {
+  background-image: radial-gradient(rgb(255 255 255 / 0.08) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 65% 60% at 60% 40%, #000 20%, transparent 75%);
+}
+.edge-fade {
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(255 255 255 / 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
