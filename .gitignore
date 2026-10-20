@@ -1,0 +1,17 @@
+# Rust / Soroban
+target/
+**/test_snapshots/
+.stellar/
+
+# Node / Next.js
+node_modules/
+.next/
+*.tsbuildinfo
+
+# Testnet secret keys for scripts/e2e.ts
+scripts/.env
+.env
+.env.*
+!.env.example
+
+.DS_Store
