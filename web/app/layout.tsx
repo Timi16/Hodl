@@ -12,8 +12,15 @@ const serif = Instrument_Serif({
   subsets: ["latin"],
 });
 
+/** Absolute base for share-card URLs: explicit, else Vercel's production domain, else local dev. */
+function siteUrl(): string {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  return "http://localhost:3000";
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(siteUrl()),
   title: { default: "HodL · Pay strangers without trusting them", template: "%s · HodL" },
   description:
     "HodL locks USDC in a Stellar smart contract until the job is done. You release it, they refund it, or the deadline sends it back.",
