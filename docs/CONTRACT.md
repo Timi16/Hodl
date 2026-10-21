@@ -2,7 +2,7 @@
 
 One Soroban contract holds every HodL escrow and all locked USDC. This page is the
 reference for the frontend and for reviewers. The design rationale lives in
-[Architecture.md](Architecture.md).
+[ARCHITECTURE.md](ARCHITECTURE.md).
 
 | | |
 |---|---|
@@ -258,7 +258,7 @@ it strips unused spec entries. A plain `cargo build --target wasm32v1-none` fail
 
 ### What the unit tests cover
 
-The 15 cases from the Architecture.md testing plan, plus:
+The 15 cases from the ARCHITECTURE.md testing plan, plus:
 
 - **Deadline boundaries:** `fund` fails and `claim_expired` succeeds at exactly `deadline`.
 - **Exact length caps:** 64 and 500 bytes pass, 65 and 501 fail, and multi-byte characters
